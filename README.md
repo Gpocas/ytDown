@@ -1,5 +1,3 @@
-# YtDown
-
 ## Objetivo:
 Um script simples em NodeJS para realizar o download de varias urls do Youtube de Forma Assincrona
 
