@@ -10,7 +10,6 @@ export async function baixarEConverterVideo(url) {
         const format_video = ytdl.chooseFormat(info.formats, { quality: 'highestvideo', filter: 'videoonly' });
         const format_audio = ytdl.chooseFormat(info.formats, { quality: 'highestaudio', filter: 'audioonly' });
         const command = `ffmpeg -i "temp/${title}.mp4" -i "temp/${title}.wav" -c:v copy -c:a aac -y "videos/${title}.mp4"`;
-        // console.log(command)
 
         const videoPromise = new Promise((resolve) => {
             ytdl.downloadFromInfo(info, { format: format_video }).pipe(fs.createWriteStream(`./temp/${title}.mp4`))
@@ -32,11 +31,13 @@ export async function baixarEConverterVideo(url) {
             console.log(`Processo ffmpeg encerrado com código ${code}`);
         });
 
+        // ----------------------- Exibir o stderr do comando ffmpeg ----------------------- 
         // ffmpegProcess.stderr.on('data', function(chunk){
         //     var textChunk = chunk.toString('utf8');
         //     console.error(textChunk);
         // });
 
+        // ----------------------- Caso queira que o processo seja sicrono descomente o bloco abaixo ----------------------- 
         // const ffmpegProcess = new Promise ((resolve) => {
         //     spawn('cmd.exe', ['/c', command], { shell: true }).on('close', resolve);  
         // })
@@ -47,6 +48,3 @@ export async function baixarEConverterVideo(url) {
         console.error('Erro:', error);
     }
 }
-
-// Chamando a função assíncrona
-baixarEConverterVideo('https://www.youtube.com/watch?v=tKJyBEad3i4');
