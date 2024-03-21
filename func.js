@@ -6,7 +6,7 @@ export async function baixarEConverterVideo(url) {
     try {
 
         const info = await ytdl.getInfo(url);
-        const title = info.videoDetails.title.replace(/\|/g, '')
+        const title = info.videoDetails.title.replace(/\|{0,1}\:{0,1}/g, '')
         const format_video = ytdl.chooseFormat(info.formats, { quality: 'highestvideo', filter: 'videoonly' });
         const format_audio = ytdl.chooseFormat(info.formats, { quality: 'highestaudio', filter: 'audioonly' });
         const command = `ffmpeg -i "temp/${title}.mp4" -i "temp/${title}.wav" -c:v copy -c:a aac -y "videos/${title}.mp4"`;
